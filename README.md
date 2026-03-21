@@ -11,10 +11,10 @@ A small browser brick breaker game with a retro arcade feel.
 
 ## Run
 
-Open [index.html](C:\Users\User\workspace\eastcoast-harbor\index.html) in a browser.
+Open [index.html](C:\Users\User\workspace\eastcoast-harbor\Brickbreaker\index.html) in a browser.
 
 ## GitHub Pages
 
 After the Pages workflow is enabled in the repository settings, the game can be published from `main` at:
 
-- [https://mjlrepo.github.io/eastcoast-harbor/](https://mjlrepo.github.io/eastcoast-harbor/)
+- [https://mjlrepo.github.io/eastcoast-harbor/Brickbreaker/](https://mjlrepo.github.io/eastcoast-harbor/Brickbreaker/)

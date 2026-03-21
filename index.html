@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harbor Breaker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Arcade Pivot</p>
+        <h1>Harbor Breaker</h1>
+        <p class="hero-text">
+          A bright brick breaker inspired by old mobile games. Bounce the signal ball, clear every cargo block, and keep the harbor online.
+        </p>
+      </div>
+      <div class="hero-stats">
+        <article class="stat-card">
+          <span>Score</span>
+          <strong id="score">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Lives</span>
+          <strong id="lives">3</strong>
+        </article>
+        <article class="stat-card">
+          <span>Level</span>
+          <strong id="level">1</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-grid">
+      <section class="panel game-panel">
+        <canvas id="game-board" width="720" height="480" aria-label="Harbor Breaker game board"></canvas>
+        <div class="game-actions">
+          <button id="start-button" class="primary-button" type="button">Start Game</button>
+          <button id="restart-button" class="secondary-button" type="button">Restart</button>
+        </div>
+        <p id="status" class="status-text">Press Start to launch the ball. Use left and right arrows or A and D.</p>
+      </section>
+
+      <section class="panel info-panel">
+        <div class="panel-heading">
+          <h2>Controls</h2>
+          <p>Simple, fast, and meant to feel old-school.</p>
+        </div>
+        <div class="info-list">
+          <article class="info-card">
+            <strong>Move</strong>
+            <span>Use `Left` and `Right` or `A` and `D`.</span>
+          </article>
+          <article class="info-card">
+            <strong>Goal</strong>
+            <span>Break every brick without losing all your lives.</span>
+          </article>
+          <article class="info-card">
+            <strong>Flow</strong>
+            <span>Each cleared board increases the ball speed and advances the level.</span>
+          </article>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,4 +1,8 @@
-# Harbor Breaker
+# Eastcoast Harbor
+
+Brickbreaker browser game published with GitHub Pages.
+
+## Harbor Breaker
 
 A small browser brick breaker game with a retro arcade feel.
 
@@ -9,12 +13,12 @@ A small browser brick breaker game with a retro arcade feel.
 - `Start Game` launches the ball
 - `Restart` resets score, lives, and level
 
-## Run
+## Run Locally
 
-Open [index.html](C:\Users\User\workspace\eastcoast-harbor\Brickbreaker\index.html) in a browser.
+Open [Brickbreaker/index.html](C:\Users\User\workspace\eastcoast-harbor\Brickbreaker\index.html) in a browser.
 
 ## GitHub Pages
 
-After the Pages workflow is enabled in the repository settings, the game can be published from `main` at:
+Published URL:
 
-- [https://mjlrepo.github.io/eastcoast-harbor/Brickbreaker/](https://mjlrepo.github.io/eastcoast-harbor/Brickbreaker/)
+- [https://mjlrepo.github.io/eastcoast-harbor/](https://mjlrepo.github.io/eastcoast-harbor/)

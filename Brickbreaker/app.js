@@ -157,6 +157,7 @@ let moveLeft = false;
 let moveRight = false;
 let bricks = [];
 let pointerActive = false;
+let pointerDown = null;
 let drops = [];
 let nextScoreDrop = 500;
 let activePowerUps = {
@@ -167,6 +168,7 @@ let activePowerUps = {
 let leaderboard = loadLeaderboard();
 let pendingScore = 0;
 let enteringScore = false;
+let audioContext = null;
 
 buildLevel();
 syncHud();
@@ -177,10 +179,13 @@ startButtonEl.addEventListener("click", startGame);
 restartButtonEl.addEventListener("click", restartGame);
 scoreFormEl.addEventListener("submit", savePendingScore);
 initialsInputEl.addEventListener("input", formatInitialsInput);
-canvas.addEventListener("pointerdown", handlePointerMove);
+canvas.addEventListener("pointerdown", handlePointerDown);
 canvas.addEventListener("pointermove", handlePointerMove);
+canvas.addEventListener("pointerup", handlePointerUp);
+canvas.addEventListener("pointercancel", clearPointerDown);
 canvas.addEventListener("pointerleave", () => {
   pointerActive = false;
+  clearPointerDown();
 });
 
 document.addEventListener("keydown", handleKeyDown);
@@ -223,6 +228,7 @@ function startGame() {
     return;
   }
 
+  unlockAudio();
   running = true;
   startButtonEl.textContent = "Resume";
   statusEl.textContent = "Game live. Keep the signal ball in play.";
@@ -336,6 +342,7 @@ function handleBrickCollision() {
 
     if (hitX && hitY) {
       brick.active = false;
+      playBrickBreakSound(brick);
       ball.dy *= -1;
       score += 10 * multiplier;
       multiplier += 1;
@@ -526,6 +533,7 @@ function draw() {
   drawDrop();
   drawPaddle();
   drawBall();
+  drawStartOverlay();
 }
 
 function drawBackdrop() {
@@ -644,6 +652,30 @@ function drawBoardHud() {
     drawHudMetric(label, value, x, 18);
     x += 94;
   }
+}
+
+function drawStartOverlay() {
+  if (running || enteringScore) {
+    return;
+  }
+
+  ctx.fillStyle = "rgba(2, 6, 23, 0.44)";
+  roundRect(170, 218, 380, 78, 10);
+  ctx.fill();
+
+  ctx.strokeStyle = "rgba(186, 230, 253, 0.42)";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.fillStyle = "#f8fafc";
+  ctx.font = "700 22px Trebuchet MS";
+  ctx.textAlign = "center";
+  ctx.fillText("Tap to Start", board.width / 2, 250);
+
+  ctx.fillStyle = "rgba(226, 232, 240, 0.78)";
+  ctx.font = "13px Trebuchet MS";
+  ctx.fillText(`Level ${level}: ${getLevelTheme().name}`, board.width / 2, 274);
+  ctx.textAlign = "start";
 }
 
 function drawHarborHorizon() {
@@ -928,10 +960,66 @@ function drawHudMetric(label, value, x, y) {
   ctx.fillText(String(value), x, y + 21);
 }
 
+function unlockAudio() {
+  if (!audioContext) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) {
+      return;
+    }
+
+    audioContext = new AudioContextClass();
+  }
+
+  if (audioContext.state === "suspended") {
+    audioContext.resume();
+  }
+}
+
+function playBrickBreakSound(brick) {
+  if (!audioContext) {
+    return;
+  }
+
+  const now = audioContext.currentTime;
+  const baseFrequency = 360 + ((brick.y - brickGrid.offsetTop) / (brickGrid.height + brickGrid.gap)) * 34;
+  const oscillator = audioContext.createOscillator();
+  const overtone = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+  const overtoneGain = audioContext.createGain();
+
+  oscillator.type = "triangle";
+  oscillator.frequency.setValueAtTime(baseFrequency, now);
+  oscillator.frequency.exponentialRampToValueAtTime(baseFrequency * 1.45, now + 0.08);
+
+  overtone.type = "sine";
+  overtone.frequency.setValueAtTime(baseFrequency * 2.02, now);
+
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(0.12, now + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
+
+  overtoneGain.gain.setValueAtTime(0.0001, now);
+  overtoneGain.gain.exponentialRampToValueAtTime(0.05, now + 0.01);
+  overtoneGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.1);
+
+  oscillator.connect(gain);
+  overtone.connect(overtoneGain);
+  gain.connect(audioContext.destination);
+  overtoneGain.connect(audioContext.destination);
+
+  oscillator.start(now);
+  overtone.start(now);
+  oscillator.stop(now + 0.15);
+  overtone.stop(now + 0.11);
+}
+
 function handleKeyDown(event) {
   if (enteringScore) {
     return;
   }
+
+  unlockAudio();
 
   if (event.key === " " || event.key === "Enter") {
     event.preventDefault();
@@ -974,6 +1062,45 @@ function handlePointerMove(event) {
   }
 
   pointerActive = true;
+  if (pointerDown) {
+    pointerDown.moved = pointerDown.moved || Math.abs(event.clientX - pointerDown.x) > 10 || Math.abs(event.clientY - pointerDown.y) > 10;
+  }
+  movePaddleToPointer(event);
+}
+
+function handlePointerDown(event) {
+  if (enteringScore) {
+    return;
+  }
+
+  unlockAudio();
+  pointerDown = {
+    x: event.clientX,
+    y: event.clientY,
+    moved: false,
+  };
+  pointerActive = true;
+  movePaddleToPointer(event);
+}
+
+function handlePointerUp(event) {
+  if (enteringScore) {
+    return;
+  }
+
+  const wasTap = pointerDown && !pointerDown.moved;
+  clearPointerDown();
+
+  if (wasTap && !running) {
+    startGame();
+  }
+}
+
+function clearPointerDown() {
+  pointerDown = null;
+}
+
+function movePaddleToPointer(event) {
   const rect = canvas.getBoundingClientRect();
   const scaleX = board.width / rect.width;
   const pointerX = (event.clientX - rect.left) * scaleX;

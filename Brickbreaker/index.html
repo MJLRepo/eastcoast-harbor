@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=themes">
+  <link rel="stylesheet" href="styles.css?v=sound">
 </head>
 <body>
   <main class="app-shell">
@@ -63,7 +63,7 @@
           <button id="start-button" class="primary-button" type="button">Start Game</button>
           <button id="restart-button" class="secondary-button" type="button">Restart</button>
         </div>
-        <p id="status" class="status-text" aria-live="polite">Press Start to launch the ball. Use arrows, A/D, or drag on the board.</p>
+        <p id="status" class="status-text" aria-live="polite">Tap the game board or press Start to launch. Drag on the board to move.</p>
       </section>
 
       <section class="panel info-panel">
@@ -117,7 +117,7 @@
     </form>
   </div>
 
-  <script src="app.js?v=themes"></script>
+  <script src="app.js?v=sound"></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {

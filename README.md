@@ -11,6 +11,7 @@ A small browser brick breaker game with a retro arcade feel.
 - `Left` and `Right` arrows move the paddle
 - `A` and `D` also move the paddle
 - Dragging on the board moves the paddle on touch and pointer devices
+- Tapping the board starts or resumes play on mobile
 - `Space` or `Enter` launches the ball
 - `Start Game` launches the ball
 - `Restart` resets score, lives, and level
@@ -22,6 +23,7 @@ A small browser brick breaker game with a retro arcade feel.
 - Boosts can widen the paddle, slow the ball, or give one 30-second Bounce Back save
 - The local leaderboard stores the top 10 scores with three-letter initials
 - Each level rotates to a different harbor theme and color palette
+- Breaking a brick plays a short sound effect after the first user gesture
 
 ## Run Locally
 

@@ -1,9 +1,9 @@
-const cacheName = "harbor-breaker-v4";
+const cacheName = "harbor-breaker-v6";
 const appShell = [
   "./",
   "./index.html",
-  "./styles.css?v=themes",
-  "./app.js?v=themes",
+  "./styles.css?v=sound",
+  "./app.js?v=sound",
   "./manifest.webmanifest",
   "./icons/icon-180.png",
   "./icons/icon-192.png",

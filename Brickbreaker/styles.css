@@ -1,30 +1,39 @@
 :root {
-  --bg: #fdf4df;
-  --surface: rgba(255, 249, 235, 0.86);
-  --surface-strong: #fffdf8;
-  --ink: #1f1a16;
-  --muted: #65584c;
-  --line: rgba(31, 26, 22, 0.08);
+  --bg: #e8f1f4;
+  --surface: #ffffff;
+  --surface-strong: #f8fafc;
+  --ink: #13202c;
+  --muted: #536575;
+  --line: rgba(21, 32, 43, 0.12);
   --teal: #0f766e;
-  --amber: #ea580c;
+  --coral: #e11d48;
   --blue: #2563eb;
-  --pink: #db2777;
-  --shadow: 0 18px 46px rgba(88, 63, 37, 0.12);
+  --gold: #b45309;
+  --shadow: 0 16px 38px rgba(15, 23, 42, 0.1);
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  min-height: 100%;
+  background: #063044;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 26%),
-    radial-gradient(circle at top right, rgba(219, 39, 119, 0.12), transparent 24%),
-    linear-gradient(180deg, #fdf4df 0%, #fffaf0 100%);
+    linear-gradient(180deg, rgba(14, 116, 144, 0.16) 0%, rgba(248, 250, 252, 0.9) 44%, rgba(226, 232, 240, 0.92) 100%),
+    linear-gradient(90deg, #e8f1f4 0%, #fff7ed 52%, #e7f3ef 100%);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  overscroll-behavior: none;
+  user-select: none;
 }
 
 .app-shell {
@@ -34,25 +43,19 @@ body {
 }
 
 .hero {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 24px;
-  align-items: end;
   margin-bottom: 24px;
 }
 
 .hero-copy,
-.panel,
-.stat-card {
+.panel {
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
 }
 
 .hero-copy,
 .panel {
-  background: var(--surface);
-  border-radius: 24px;
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 8px;
 }
 
 .hero-copy {
@@ -64,7 +67,7 @@ body {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--amber);
+  color: var(--teal);
   font-weight: 700;
 }
 
@@ -99,31 +102,65 @@ h1 {
 
 .hero-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(116px, 1fr));
   gap: 16px;
-}
-
-.stat-card {
-  background: var(--surface-strong);
-  border-radius: 22px;
-  padding: 20px 18px;
-}
-
-.stat-card span {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--muted);
-  font-size: 0.88rem;
-}
-
-.stat-card strong {
-  font-size: clamp(1.4rem, 2vw, 2rem);
 }
 
 .content-grid {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: 24px;
+}
+
+.leaderboard-panel {
+  margin-bottom: 24px;
+}
+
+.leaderboard-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.leaderboard-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: scores;
+}
+
+.leaderboard-list li {
+  counter-increment: scores;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid rgba(15, 76, 102, 0.14);
+  border-radius: 8px;
+  background: rgba(248, 250, 252, 0.78);
+}
+
+.leaderboard-list li::before {
+  content: counter(scores, decimal-leading-zero);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.leaderboard-list span {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.leaderboard-list strong {
+  color: var(--teal);
 }
 
 .panel {
@@ -141,11 +178,15 @@ h1 {
 #game-board {
   width: 100%;
   max-width: 100%;
-  border-radius: 22px;
-  border: 1px solid rgba(31, 26, 22, 0.14);
-  background: linear-gradient(180deg, #10233c 0%, #07121f 100%);
+  aspect-ratio: 3 / 2;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 76, 102, 0.24);
+  background: linear-gradient(180deg, #12365b 0%, #063044 100%);
   display: block;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  touch-action: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 18px 34px rgba(8, 47, 73, 0.16);
 }
 
 .game-actions {
@@ -158,7 +199,8 @@ h1 {
 .primary-button,
 .secondary-button {
   border: 0;
-  border-radius: 999px;
+  border-radius: 8px;
+  min-height: 44px;
   padding: 12px 18px;
   font: inherit;
   cursor: pointer;
@@ -167,7 +209,7 @@ h1 {
 
 .primary-button {
   background: var(--ink);
-  color: #fffaf0;
+  color: #ffffff;
 }
 
 .secondary-button {
@@ -187,7 +229,7 @@ h1 {
 
 .info-card {
   padding: 16px;
-  border-radius: 18px;
+  border-radius: 8px;
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.72);
 }
@@ -202,6 +244,95 @@ h1 {
   line-height: 1.5;
 }
 
+kbd {
+  display: inline-block;
+  min-width: 1.7em;
+  padding: 0.12rem 0.38rem;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: #f8fafc;
+  color: var(--ink);
+  font: 0.84em "Segoe UI", sans-serif;
+  text-align: center;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.score-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(3, 7, 18, 0.72);
+}
+
+.score-modal[hidden] {
+  display: none;
+}
+
+.score-dialog {
+  width: min(100%, 340px);
+  padding: 22px;
+  border: 1px solid rgba(186, 230, 253, 0.24);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+}
+
+.score-dialog h2 {
+  margin-bottom: 8px;
+}
+
+.modal-score {
+  margin-bottom: 16px;
+  color: var(--muted);
+}
+
+.score-dialog label,
+.score-dialog span {
+  display: block;
+}
+
+.score-dialog label {
+  margin-bottom: 6px;
+  font-weight: 800;
+}
+
+.score-dialog input {
+  width: 100%;
+  min-height: 54px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(15, 76, 102, 0.24);
+  border-radius: 8px;
+  font: 800 1.5rem "Trebuchet MS", "Segoe UI", sans-serif;
+  letter-spacing: 0.22em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.score-dialog input:focus {
+  outline: 3px solid rgba(14, 165, 233, 0.28);
+}
+
+.score-dialog span {
+  margin-bottom: 16px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 @media (max-width: 860px) {
   .hero,
   .content-grid,
@@ -212,5 +343,111 @@ h1 {
   .app-shell {
     width: min(100% - 20px, 1120px);
     padding-top: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    background: #063044;
+  }
+
+  .app-shell {
+    width: 100%;
+    min-height: 100dvh;
+    padding: max(10px, env(safe-area-inset-top)) 10px max(14px, env(safe-area-inset-bottom));
+  }
+
+  .hero {
+    margin-bottom: 10px;
+  }
+
+  .leaderboard-panel {
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
+  .leaderboard-heading {
+    margin-bottom: 8px;
+  }
+
+  .leaderboard-heading h2 {
+    font-size: 1.15rem;
+  }
+
+  .leaderboard-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .leaderboard-list li {
+    min-height: 36px;
+    padding: 8px;
+    font-size: 0.88rem;
+  }
+
+  .hero-copy {
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .eyebrow {
+    font-size: 0.68rem;
+    margin-bottom: 4px;
+  }
+
+  h1 {
+    font-size: 1.85rem;
+    line-height: 1;
+  }
+
+  .hero-text {
+    margin-top: 6px;
+    font-size: 0.9rem;
+  }
+
+  .content-grid {
+    gap: 10px;
+  }
+
+  .game-panel {
+    padding: 10px;
+  }
+
+  #game-board {
+    border-radius: 6px;
+  }
+
+  .game-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 10px 0 8px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .status-text {
+    font-size: 0.9rem;
+  }
+
+  .info-panel {
+    padding: 12px;
+  }
+
+  .info-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .info-card {
+    padding: 10px;
+  }
+
+  .info-card span,
+  .panel-heading p {
+    font-size: 0.84rem;
   }
 }

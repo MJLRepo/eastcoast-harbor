@@ -2,21 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Harbor Breaker</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Harbor-themed brick breaker arcade game.">
+  <meta name="theme-color" content="#063044">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Harbor Breaker">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css?v=themes">
 </head>
 <body>
   <main class="app-shell">
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">Arcade Pivot</p>
+        <p class="eyebrow">Arcade Run</p>
         <h1>Harbor Breaker</h1>
         <p class="hero-text">
-          A bright brick breaker inspired by old mobile games. Bounce the signal ball, clear every cargo block, and keep the harbor online.
+          Bounce the signal buoy, clear every cargo container, catch boosts, and keep the harbor online.
         </p>
       </div>
-      <div class="hero-stats">
+      <div class="hero-stats sr-only" aria-live="polite">
         <article class="stat-card">
           <span>Score</span>
           <strong id="score">0</strong>
@@ -29,7 +37,23 @@
           <span>Level</span>
           <strong id="level">1</strong>
         </article>
+        <article class="stat-card">
+          <span>Multiplier</span>
+          <strong id="multiplier">1x</strong>
+        </article>
+        <article class="stat-card">
+          <span>Bricks</span>
+          <strong id="bricks-broken">0</strong>
+        </article>
       </div>
+    </section>
+
+    <section class="panel leaderboard-panel" aria-labelledby="leaderboard-title">
+      <div class="panel-heading leaderboard-heading">
+        <h2 id="leaderboard-title">Leaderboard</h2>
+        <p>Top 10 harbor runs</p>
+      </div>
+      <ol id="leaderboard-list" class="leaderboard-list"></ol>
     </section>
 
     <section class="content-grid">
@@ -39,7 +63,7 @@
           <button id="start-button" class="primary-button" type="button">Start Game</button>
           <button id="restart-button" class="secondary-button" type="button">Restart</button>
         </div>
-        <p id="status" class="status-text">Press Start to launch the ball. Use left and right arrows or A and D.</p>
+        <p id="status" class="status-text" aria-live="polite">Press Start to launch the ball. Use arrows, A/D, or drag on the board.</p>
       </section>
 
       <section class="panel info-panel">
@@ -50,11 +74,27 @@
         <div class="info-list">
           <article class="info-card">
             <strong>Move</strong>
-            <span>Use `Left` and `Right` or `A` and `D`.</span>
+            <span>Use <kbd>Left</kbd>/<kbd>Right</kbd>, <kbd>A</kbd>/<kbd>D</kbd>, or drag on the board.</span>
+          </article>
+          <article class="info-card">
+            <strong>Launch</strong>
+            <span>Press <kbd>Space</kbd>, <kbd>Enter</kbd>, or Start Game.</span>
           </article>
           <article class="info-card">
             <strong>Goal</strong>
             <span>Break every brick without losing all your lives.</span>
+          </article>
+          <article class="info-card">
+            <strong>Combo</strong>
+            <span>Each brick is worth 10 points times your multiplier. The multiplier resets when the ball hits the paddle.</span>
+          </article>
+          <article class="info-card">
+            <strong>Count</strong>
+            <span>The Bricks stat tracks how many blocks you have broken this run.</span>
+          </article>
+          <article class="info-card">
+            <strong>Drops</strong>
+            <span>Boosts can widen the paddle, slow the ball, or give one 30-second Bounce Back save.</span>
           </article>
           <article class="info-card">
             <strong>Flow</strong>
@@ -65,6 +105,25 @@
     </section>
   </main>
 
-  <script src="app.js"></script>
+  <div id="score-modal" class="score-modal" hidden>
+    <form id="score-form" class="score-dialog">
+      <p class="eyebrow">High Score</p>
+      <h2>Log Your Run</h2>
+      <p id="final-score" class="modal-score">Score 0</p>
+      <label for="initials-input">Initials</label>
+      <input id="initials-input" name="initials" type="text" inputmode="text" maxlength="3" autocomplete="off" spellcheck="false" aria-describedby="initials-help">
+      <span id="initials-help">Enter exactly three letters.</span>
+      <button class="primary-button" type="submit">Save Score</button>
+    </form>
+  </div>
+
+  <script src="app.js?v=themes"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("service-worker.js");
+      });
+    }
+  </script>
 </body>
 </html>

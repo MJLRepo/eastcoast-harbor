@@ -137,13 +137,14 @@ const levelThemes = [
 ];
 
 const brickGrid = {
-  rows: 6,
-  columns: 9,
+  rows: 8,
+  columns: 8,
   width: 64,
-  height: 22,
-  gap: 10,
-  offsetTop: 86,
-  offsetLeft: 36,
+  height: 18,
+  columnGap: 10,
+  rowGap: 5,
+  offsetTop: 63,
+  offsetLeft: 69,
 };
 
 let score = 0;
@@ -202,8 +203,8 @@ function buildLevel() {
       const index = row * brickGrid.columns + column;
 
       bricks.push({
-        x: brickGrid.offsetLeft + column * (brickGrid.width + brickGrid.gap),
-        y: brickGrid.offsetTop + row * (brickGrid.height + brickGrid.gap),
+        x: brickGrid.offsetLeft + column * (brickGrid.width + brickGrid.columnGap),
+        y: brickGrid.offsetTop + row * (brickGrid.height + brickGrid.rowGap),
         width: brickGrid.width,
         height: brickGrid.height,
         color: pickBrickColor(row, column),
@@ -982,7 +983,7 @@ function playBrickBreakSound(brick) {
   }
 
   const now = audioContext.currentTime;
-  const baseFrequency = 360 + ((brick.y - brickGrid.offsetTop) / (brickGrid.height + brickGrid.gap)) * 34;
+  const baseFrequency = 360 + ((brick.y - brickGrid.offsetTop) / (brickGrid.height + brickGrid.rowGap)) * 34;
   const oscillator = audioContext.createOscillator();
   const overtone = audioContext.createOscillator();
   const gain = audioContext.createGain();

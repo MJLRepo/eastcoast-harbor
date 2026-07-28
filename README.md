@@ -2,6 +2,19 @@
 
 Brickbreaker browser game published with GitHub Pages.
 
+## Quebec Drive Quest
+
+A gamified Class 5 study app for Quebec learner drivers. It includes quiz runs,
+flashcards, a mock-test mode, XP, streaks, badges, skill zones, and a visual road
+map. The practice content is original and should be used alongside official SAAQ
+study material.
+
+Open `QuebecDriveQuest/index.html` in a browser.
+
+Published URL:
+
+- [https://mjlrepo.github.io/eastcoast-harbor/QuebecDriveQuest/](https://mjlrepo.github.io/eastcoast-harbor/QuebecDriveQuest/)
+
 ## Harbor Breaker
 
 A small browser brick breaker game with a retro arcade feel.

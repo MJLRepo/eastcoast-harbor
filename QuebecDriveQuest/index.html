@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quebec Drive Quest</title>
+  <meta name="description" content="A gamified study app for Quebec Class 5 learner and knowledge test preparation.">
+  <meta name="theme-color" content="#133f4f">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="topbar" aria-label="Player progress">
+      <div>
+        <p class="eyebrow">Class 5 Study Game</p>
+        <h1>Quebec Drive Quest</h1>
+      </div>
+      <div class="profile-strip" aria-live="polite">
+        <div>
+          <span>Level</span>
+          <strong id="player-level">1</strong>
+        </div>
+        <div>
+          <span>XP</span>
+          <strong id="player-xp">0</strong>
+        </div>
+        <div>
+          <span>Streak</span>
+          <strong id="player-streak">0</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard">
+      <aside class="mission-panel" aria-labelledby="mission-title">
+        <div class="panel-heading">
+          <h2 id="mission-title">Road Map</h2>
+          <button id="reset-progress" class="icon-button" type="button" aria-label="Reset progress" title="Reset progress">↻</button>
+        </div>
+        <canvas id="road-map" width="420" height="620" aria-label="Progress road map"></canvas>
+        <div class="progress-meter" aria-label="Overall progress">
+          <span id="progress-label">0 of 5 zones cleared</span>
+          <div><i id="progress-bar"></i></div>
+        </div>
+      </aside>
+
+      <section class="play-panel" aria-labelledby="challenge-title">
+        <div class="tabs" role="tablist" aria-label="Study modes">
+          <button class="tab active" type="button" data-mode="quiz" role="tab" aria-selected="true">Quiz Run</button>
+          <button class="tab" type="button" data-mode="cards" role="tab" aria-selected="false">Flashcards</button>
+          <button class="tab" type="button" data-mode="boss" role="tab" aria-selected="false">Mock Test</button>
+        </div>
+
+        <div class="challenge-card">
+          <div class="challenge-head">
+            <div>
+              <p id="challenge-tag" class="eyebrow">Warm-Up</p>
+              <h2 id="challenge-title">Choose the safest answer.</h2>
+            </div>
+            <span id="question-count" class="pill">1 / 10</span>
+          </div>
+
+          <div id="scenario-visual" class="scenario-visual" aria-hidden="true"></div>
+          <p id="question-text" class="question-text"></p>
+          <div id="answer-list" class="answer-list"></div>
+          <p id="feedback" class="feedback" aria-live="polite"></p>
+
+          <div class="actions">
+            <button id="next-button" class="primary-button" type="button" disabled>Next</button>
+            <button id="hint-button" class="secondary-button" type="button">Hint</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="stats-panel" aria-labelledby="stats-title">
+        <div class="panel-heading">
+          <h2 id="stats-title">Garage</h2>
+        </div>
+        <div class="stat-grid">
+          <article>
+            <span>Accuracy</span>
+            <strong id="accuracy">0%</strong>
+          </article>
+          <article>
+            <span>Best Run</span>
+            <strong id="best-run">0</strong>
+          </article>
+          <article>
+            <span>Badges</span>
+            <strong id="badge-count">0</strong>
+          </article>
+          <article>
+            <span>Today</span>
+            <strong id="today-count">0</strong>
+          </article>
+        </div>
+
+        <div class="section-block">
+          <h3>Skill Zones</h3>
+          <div id="zone-list" class="zone-list"></div>
+        </div>
+
+        <div class="section-block">
+          <h3>Badges</h3>
+          <div id="badge-list" class="badge-list"></div>
+        </div>
+
+        <div class="source-note">
+          <strong>Study note</strong>
+          <p>This app uses original practice questions inspired by Quebec Class 5 topics. Verify requirements with the SAAQ before booking a test.</p>
+          <a href="https://saaq.gouv.qc.ca/en/drivers-licences/obtaining-licence/passenger-vehicle-class-5/" target="_blank" rel="noreferrer">Official SAAQ Class 5 guide</a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
